@@ -15,14 +15,15 @@ Assignment Repo consists of a docker-compose configuration of the following serv
 * PHP MyAdmin
 * Redis
 
-PHP Source files are located in ./www/.
-SQL Database Source is located in the root.
+PHP Source files are located in `./www/`
+
+SQL Database Source is located in `./SqlImports/`
 
 ### Installation
 
 Clone this repository on your local computer and `docker-compose up -d`.
 
-    ```shell
+    ```
     git clone https://github.com/camaron182/cs5339_fall19_assignment3.git
     cd cs5339_fall19_assignment3/
     cp sample.env .env
