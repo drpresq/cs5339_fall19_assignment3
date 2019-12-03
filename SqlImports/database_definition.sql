@@ -12,10 +12,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- user types table
+-- table `tusertypes`
 --
 
-CREATE TABLE IF NOT EXISTS `usertypes` (
+CREATE TABLE IF NOT EXISTS `tusertypes` (
 	`ID` int auto_increment,
 	`Type` varchar(14) DEFAULT NULL,
 	`NotFields` varchar(56) DEFAULT NULL,
@@ -23,22 +23,23 @@ CREATE TABLE IF NOT EXISTS `usertypes` (
 ) ENGINE=innoDB DEFAULT CHARSET=utf8;	
 
 --
--- user table
+-- table `tusers`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS `tusers` (
 	`ID` int auto_increment,
-	`Username` varchar(100) not null,
-	`UPassword` varchar(256) not null,
-	`UserType` varchar (14) not null,
+	`Username` varchar(100) NOT NULL,
+	`UPassword` varchar(256) NOT NULL,
+	`UserType` varchar (14) DEFAULT `Logged-in User`,
+	`EmailAddress` varchar(256) NOT NULL,
 	PRIMARY KEY (`ID`)
 ) ENGINE=innoDB DEFAULT CHARSET=utf8;
 
 --
--- create type records in table `usertypes`
+-- create type records in table `tusertypes`
 --
 
-INSERT INTO `usertypes` (`ID`, `Type`, `NotFields`) VALUES
+INSERT INTO `tusertypes` (`ID`, `Type`, `NotFields`) VALUES
 (0, 'Visitor', 'PartID, Price, Estimated Shipping Cost, Shipping Weight'), 
 (1, 'Logged-in User', 'None'), 
 (2, 'Administrator', 'None');
