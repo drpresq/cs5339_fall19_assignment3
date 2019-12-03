@@ -1,23 +1,21 @@
-# cs5339_fall19_assignment3
+# CS5339 FALL19 ASSIGNMENT 3
 ## Table of Contents
-- [Assignment 3](#cs5339_fall19_assignment3)
+- [Assignment 3](#cs5339-fall19-assignment-3)
   - [Table of Contents](#table-of-contents)
     - [Description](#description)
     - [Installation](#installation)
-    - [Acknowledgments](#acknowledgments)
 
 ### Description
 Repository for CS5339 Fall 2019 Assignment 3
 
-Assignment Repo consists of a docker-compose configuration of the following services:
-* PHP 7.2
-* SQL 5.7
-* PHP MyAdmin
-* Redis
-
-PHP Source files are located in `./www/`
-
-SQL Database Source is located in `./SqlImports/`
+- Assignment Repository consists of the following:
+  * Docker-Compose definition for the following service bundle:
+    - PHP 7.2
+    - SQL 5.7
+    - PHP MyAdmin
+    - Redis
+  * PHP Source files are located in `./www/`
+  * SQL Database Source is located in `./SqlImports/`
 
 ### Installation
 
