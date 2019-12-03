@@ -14,8 +14,8 @@ Repository for CS5339 Fall 2019 Assignment 3
     - SQL 5.7
     - PHP MyAdmin
     - Redis
-  * PHP Source files are located in `./www/`
-  * SQL Database Source is located in `./SqlImports/`
+  * PHP Source files located in `./www/`
+  * SQL Source files located in `./SqlImports/`
 
 ### Installation
 
