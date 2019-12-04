@@ -19,11 +19,12 @@ Repository for CS5339 Fall 2019 Assignment 3
 
 ### Installation
 
-Clone this repository on your local computer and `docker-compose up -d`.
+Clone this repository on your local computer, install docker, and `docker-compose up -d`.
 
     ```
     git clone https://github.com/camaron182/cs5339_fall19_assignment3.git
     cd cs5339_fall19_assignment3/
+    ./docker-install.sh
     cp sample.env .env
     docker-compose up -d
     ```
