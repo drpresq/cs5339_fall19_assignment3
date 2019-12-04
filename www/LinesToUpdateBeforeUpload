@@ -1,6 +1,0 @@
-This file is a running list of things to do to uploading to the lab webserver:
-
-1) Rename ./partsIndex.php to ./index.php
-2) Delete phpinfo.php
-3) Delete test_db.php
-4) ./assets/phplib/connect.php || lines 4/5 ; adjust to your username

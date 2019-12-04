@@ -12,17 +12,6 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- table `tusertypes`
---
-
-CREATE TABLE IF NOT EXISTS `tusertypes` (
-	`ID` int auto_increment,
-	`Type` varchar(14) DEFAULT NULL,
-	`NotFields` varchar(56) DEFAULT NULL,
-	PRIMARY KEY (`ID`)
-) ENGINE=innoDB DEFAULT CHARSET=utf8;	
-
---
 -- table `tusers`
 --
 
@@ -30,17 +19,18 @@ CREATE TABLE IF NOT EXISTS `tusers` (
 	`ID` int auto_increment,
 	`Username` varchar(100) NOT NULL,
 	`UPassword` varchar(256) NOT NULL,
-	`UserType` varchar (14) DEFAULT `Logged-in User`,
-	`EmailAddress` varchar(256) NOT NULL,
-	PRIMARY KEY (`ID`)
+	`EmailAddress` varchar(100) NOT NULL,
+	`Admin` BOOLEAN NOT NULL DEFAULT 0,
+	PRIMARY KEY (`ID`),
+	UNIQUE (`Username`),
+	UNIQUE (`EmailAddress`)
 ) ENGINE=innoDB DEFAULT CHARSET=utf8;
 
 --
--- create type records in table `tusertypes`
+-- Add Admin Users to `tusers`
 --
 
-INSERT INTO `tusertypes` (`ID`, `Type`, `NotFields`) VALUES
-(0, 'Visitor', 'PartID, Price, Estimated Shipping Cost, Shipping Weight'), 
-(1, 'Logged-in User', 'None'), 
-(2, 'Administrator', 'None');
+INSERT INTO `tusers` (`Username`,`UPassword`,`EmailAddress`,`Admin`) VALUES
+('longpre','Password123456','longpre@utep.edu','1'),
+('dreyes15','Password123456','dreyes15@miners.utep.edu','1')
 
