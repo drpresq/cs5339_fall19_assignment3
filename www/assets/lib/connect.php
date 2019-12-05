@@ -1,6 +1,6 @@
 <?php // connect.php
       // Change the username to your utep name prior to upload
-  $realtest = true;
+  $realtest = false;
   
   if($realtest){
     $hn = 'cssrvlab01.utep.edu';
@@ -15,7 +15,7 @@
   
   } else {
     $hn = '127.0.0.1:3306';
-    $db = 'mysql';
+    $db = 'test';
     $un = 'user';
     $pw = '*utep2020!';
 

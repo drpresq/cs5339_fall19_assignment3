@@ -11,26 +11,30 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- table `tusers`
---
+drop database test;
+CREATE DATABASE test;
+use test;
 
-CREATE TABLE IF NOT EXISTS `tusers` (
-	`ID` int auto_increment,
-	`Username` varchar(100) NOT NULL,
-	`UPassword` varchar(256) NOT NULL,
-	`EmailAddress` varchar(100) NOT NULL,
-	`Admin` BOOLEAN NOT NULL DEFAULT 0,
-	PRIMARY KEY (`ID`),
-	UNIQUE (`Username`),
-	UNIQUE (`EmailAddress`)
-) ENGINE=innoDB DEFAULT CHARSET=utf8;
+CREATE TABLE usertype (
+	id int auto_increment,
+	utype varchar(10) not null,
+	primary key (id),
+	unique (utype)
+);
 
---
--- Add Admin Users to `tusers`
---
+insert into usertype (utype) values ('admin'), ('user');
 
-INSERT INTO `tusers` (`Username`,`UPassword`,`EmailAddress`,`Admin`) VALUES
-('longpre','Password123456','longpre@utep.edu','1'),
-('dreyes15','Password123456','dreyes15@miners.utep.edu','1')
+CREATE TABLE tusers (
+	ID int auto_increment,
+	Username varchar(100) NOT NULL,
+	UPassword varchar(256) NOT NULL,
+	EmailAddress varchar(100) NOT NULL,
+	utype varchar(10) not null,
+	PRIMARY KEY (ID),
+	UNIQUE (Username),
+	UNIQUE (EmailAddress),
+	foreign key (utype) references usertype(utype)
+)
+
+INSERT INTO tusers (Username, UPassword, EmailAddress, utype) VALUES ('longpre','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','longpre@utep.edu','admin'), ('dreyes15','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','dreyes15@miners.utep.edu','admin'), ('user1','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','email1@miners.utep.edu','user');
 
