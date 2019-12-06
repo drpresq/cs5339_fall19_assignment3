@@ -13,33 +13,25 @@ $index = 0;
 if (isset($_GET["pindex"])){
 	$index = (int)filter_input(INPUT_GET, "pindex");	
 }
-if (isset($_POST["search"])) {
-	if (!isset($_POST["session_id"])) {
-		$result = search("", "guest", $index);
-		print_table($result, "guest");
-	} 
-	$id = filter_input(INPUT_POST, "session_id");
-	if ($id != session_id()){
-		$result = search("", "guest", $index);
-		print_table($result, "guest");
-	} else {
-		$search_input = (string)filter_input(INPUT_POST, "search");
-		if (isset($_SESSION["user_type"])) {
-			$user_type = $_SESSION["user_type"];
-			if ($user_type == "user"){
-				$result = search($search_input, "user", $index);
-			} else if ($user_type == "admin") {
-				$result = search($search_input, "user", $index);
-			} else {
-				$result = search($search_input, "guest", $index);
-				print_table($result, "guest");
-			}	
+if (isset($_GET["search"])) {
+	$search_input = (string)filter_input(INPUT_GET, "search");
+	if (isset($_SESSION["user_type"])) {
+		$user_type = $_SESSION["user_type"];
+		if ($user_type == "user"){
+			$result = search($search_input, "user", $index);
+		} else if ($user_type == "admin") {
+			$result = search($search_input, "user", $index);
 		} else {
 			$result = search($search_input, "guest", $index);
 			print_table($result, "guest");
-		}
+		}	
+	} else {
+		$result = search($search_input, "guest", $index);
+		print_table($result, "guest");
 	}
 } else {
+	
+	
 	$result = search("", "guest", $index);
 	print_table($result, "guest");
 }
@@ -104,7 +96,7 @@ function getSearchCount($keyword){
 		$stmt->execute();
 		$stmt->bind_result($c);
 		while($stmt->fetch()) {
-                $count = $c;
+			$count = $c;
         }
         @mysqli_close($connection);
         return $count;
@@ -169,14 +161,14 @@ function print_table ($query_result, $user_type) {
 		}
 	}
 	echo "</table>";
-	print_page_bar();
+	print_nav_bar();
 }
 
 
-function print_page_bar(){
+function print_nav_bar(){
 	$search_input = "";
-	if (isset($_POST["search"])) {
-		$search_input = (string)filter_input(INPUT_POST, "search");
+	if (isset($_GET["search"])) {
+		$search_input = (string)filter_input(INPUT_GET, "search");
 	}
 	$page = 1;
 	if (isset($_GET["page"])){
@@ -193,6 +185,7 @@ function print_page_bar(){
 	
 	
 	echo "<div class='page_navigator'>";
+	echo "Items Found: $row_count.<br/>";
 	echo "Current Page: $current_page <br/>";
 	echo "<nav>";
 	$start_page = 1;
@@ -208,25 +201,43 @@ function print_page_bar(){
 		if ($current_page >= $MAX_INDEXES_PER_PAGE) {
 			$pindex = $start_page * $MAX_ROWS_PER_PAGE;
 			$page = $start_page - 1;
-			echo "<a href='index.php?pindex=$pindex&page=".$page."' >...</a>";
+			
+			if (isset($_GET["search"])){
+				$search_input = (string)filter_input(INPUT_GET, "search");
+				echo "<a href='index.php?search=$search_input&pindex=$pindex&page=".$page."' >...</a>";
+			} else {
+				echo "<a href='index.php?pindex=$pindex&page=".$page."' >...</a>";
+			}
 		}
 	}
 	$end_page = intval($page_count);
 	$next_multiple_of_five = intval($current_page);
-	while (($next_multiple_of_five % $MAX_INDEXES_PER_PAGE) != 0 
-			|| $next_multiple_of_five == $current_page) { 
-		++$next_multiple_of_five; 
-	}
-	if ($current_page <= $page_count) {
-		$end_page = intval($next_multiple_of_five);
+	if (($end_page - $curren_page) > 5) {
+		while (($next_multiple_of_five % $MAX_INDEXES_PER_PAGE) != 0 
+				|| $next_multiple_of_five == $current_page) { 
+			++$next_multiple_of_five; 
+		}
+		if ($current_page <= $page_count) {
+			$end_page = intval($next_multiple_of_five);
+		}
 	}
 	$pindex = 0;
 	for ($p = $start_page; $p <= $end_page; $p++) {
-		$pindex = $p * $MAX_ROWS_PER_PAGE;
-		echo "<a href='index.php?pindex=$pindex&page=$p' >$p</a>";
+		$pindex = ($p - 1) * $MAX_ROWS_PER_PAGE;
+		if (isset($_GET["search"])){
+			$search_input = (string)filter_input(INPUT_GET, "search");
+			echo "<a href='index.php?search=$search_input&pindex=$pindex&page=$p' >$p</a>";
+		} else {
+			echo "<a href='index.php?pindex=$pindex&page=$p' >$p</a>";
+		}
 	}
 	if (($page_count - $current_page) > 5) {
-		echo "<a href='index.php?pindex=$pindex&page=".($end_page + 1)."' >...</a>";
+		if (isset($_GET["search"])){
+			$search_input = (string)filter_input(INPUT_GET, "search");
+			echo "<a href='index.php?search=$search_input&pindex=$pindex&page=".($end_page + 1)."' >...</a>";
+		} else {
+			echo "<a href='index.php?pindex=$pindex&page=".($end_page + 1)."' >...</a>";
+		}
 	}
 	echo "</nav>";
 	echo "</div>";
