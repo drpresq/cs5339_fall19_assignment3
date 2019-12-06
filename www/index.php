@@ -13,10 +13,12 @@ require_once 'assets/lib/searchbar.php';
 if (isset($_POST["search"])) {
 	if (!isset($_POST["session_id"])) {
 		$result = search("", "guest");
+		print_table($result, "guest");
 	} 
 	$id = filter_input(INPUT_POST, "session_id");
 	if ($id != session_id()){
 		$result = search("", "guest");
+		print_table($result, "guest");
 	} else{
 		$search_input = (string)filter_input(INPUT_POST, "search");
 		if (isset($_SESSION["user_type"])) {
@@ -27,13 +29,16 @@ if (isset($_POST["search"])) {
 				$result = search($search_input, "admin");
 			} else {
 				$result = search($search_input, "guest");
+				print_table($result, "guest");
 			}	
 		} else {
 			$result = search($search_input, "guest");
+			print_table($result, "guest");
 		}
 	}
 } else {
 	$result = search("", "guest");
+	print_table($result, "guest");
 }
 
 /*
@@ -61,20 +66,14 @@ function search($keyword, $user_type){
     $connection = new mysqli($host, $usr, $pw, $db);
     if ($connection->connect_error) die("Fatal Error");
 	
-	$result = null;
-	$columns = "PartName, PartNumber, Suppliers, Category, Description01"; 
-	if ($user_type == "user") {
-		$columns = "PPartName, PartNumber, Suppliers, Category, Description01, Price";
-	} else if ($user_type == "admin") {
-		$columns = "*";
-	}
+	$result = array();
 	try {
-		$stmt = $connection->prepare("select $columns from carparts where PartName like ? ");
-		$stmt->bind_param("s", $keyword);
+		$stmt = $connection->prepare("call sp_search( ?, ? )");
+		$stmt->bind_param("ss", $keyword, $user_type);
 		$stmt->execute();
-		$stmt->bind_result($cnt);
-		while($stmt->fetch()) {
-			$result = $cnt;
+		$result_arr = $stmt->get_result();
+		while($row = $result_arr->fetch_assoc()) {
+			$result[] = $row;
 		}
 		@mysqli_close($connection);
 		return $result;
@@ -92,8 +91,12 @@ function print_table ($query_result, $user_type) {
 	} 
 	echo "<table>";
 	if ($user_type == "user") {
-		echo "<tr><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
-			."<th>Category</th><th>Description</th></tr>";
+		echo "<tr><th>PartID</th><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
+			."<th>Category</th><th>Description01</th><th>Description02</th><th>Description03</th>"
+			."<th>Description04</th><th>Description05</th><th>Description06</th><th>Price</th>"
+			."<th>Estimated Shipping Cost</th><th>Associated image filename1</th><th>Associated image filename2</th>" 
+			."<th>Associated image filename3</th><th>Associated image filename4</th><th>Notes</th>"
+			."<th>Shipping Weight</th></tr>";
 		foreach ($query_result as $row) {
 			echo "<tr>";
 			foreach ($row as $column_data) {
@@ -102,8 +105,12 @@ function print_table ($query_result, $user_type) {
 			echo "</tr>";
 		}
 	} else if ($user_type == "admin") {
-		echo "<tr><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
-			."<th>Category</th><th>Description</th><th>Price</th></tr>";
+		echo "<tr><th>PartID</th><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
+			."<th>Category</th><th>Description01</th><th>Description02</th><th>Description03</th>"
+			."<th>Description04</th><th>Description05</th><th>Description06</th><th>Price</th>"
+			."<th>Estimated Shipping Cost</th><th>Associated image filename1</th><th>Associated image filename2</th>" 
+			."<th>Associated image filename3</th><th>Associated image filename4</th><th>Notes</th>"
+			."<th>Shipping Weight</th></tr>";
 		foreach ($query_result as $row) {
 			echo "<tr>";
 			foreach ($row as $column_data) {
@@ -112,12 +119,8 @@ function print_table ($query_result, $user_type) {
 			echo "</tr>";
 		}
 	} else {
-		echo "<tr><th>PartID</th><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
-			."<th>Category</th><th>Description01</th><th>Description02</th><th>Description03</th>"
-			."<th>Description04</th><th>Description05</th><th>Description06</th><th>Price</th>"
-			."<th>Estimated Shipping Cost</th><th>Associated image filename1</th><th>Associated image filename2</th>" 
-			."<th>Associated image filename3</th><th>Associated image filename4</th><th>Notes</th>"
-			."<th>Shipping Weight</th></tr>";
+		echo "<tr><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
+			."<th>Category</th><th>Description</th></tr>";
 		foreach ($query_result as $row) {
 			echo "<tr>";
 			foreach ($row as $column_data) {
