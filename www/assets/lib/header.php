@@ -138,6 +138,35 @@ span.reg {
     float: none;
   }
 }
+
+.table-filter {
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+.table-filter tbody tr:hover {
+	cursor: pointer;
+	background-color: #eee;
+}
+.table-filter tbody tr td {
+	padding: 5px;
+	vertical-align: middle;
+	border-top-color: #eee;
+}
+.table-filter tbody tr.selected td {
+	background-color: #eee;
+}
+.table-filter tr td:first-child {
+	width: 80%;
+}
+
+.table-filter tr td:nth-child(2) {
+	text-align: right;
+}
+
+.table-filter .artist {
+        color:gray;
+	font-size: 13px;
+}
 </style>
 _END;
 

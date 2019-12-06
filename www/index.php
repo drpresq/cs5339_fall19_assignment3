@@ -89,7 +89,7 @@ function print_table ($query_result, $user_type) {
 		echo "<p>Sorry, no results found!</p>";
 		return;
 	} 
-	echo "<table>";
+	echo "<table class='table-filter'>";
 	if ($user_type == "user") {
 		echo "<tr><th>PartID</th><th>PartName</th><th>PartNumber</th><th>Suppliers</th>"
 			."<th>Category</th><th>Description01</th><th>Description02</th><th>Description03</th>"
