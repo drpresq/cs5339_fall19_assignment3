@@ -34,7 +34,7 @@ CREATE TABLE tusers (
 	UNIQUE (Username),
 	UNIQUE (EmailAddress),
 	foreign key (utype) references usertype(utype)
-)
+);
 
-INSERT INTO tusers (Username, UPassword, EmailAddress, utype) VALUES ('longpre','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','longpre@utep.edu','admin'), ('dreyes15','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','dreyes15@miners.utep.edu','admin'), ('user1','55251d1743e6e43faba8515ca264dea8d588d633edc062e7bf546cc8578fb1e1','email1@miners.utep.edu','user');
+INSERT INTO tusers (Username, UPassword, EmailAddress, utype) VALUES ('longpre','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','longpre@utep.edu','admin'), ('dreyes15','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','dreyes15@miners.utep.edu','admin'), ('user1','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','email1@miners.utep.edu','user');
 

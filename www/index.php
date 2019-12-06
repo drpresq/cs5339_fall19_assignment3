@@ -2,12 +2,7 @@
 // Establish DB Connection
 require_once 'assets/lib/header.php';
 require_once 'assets/lib/searchbar.php';
-
-
-/**
- * Ernesto's implementation
- * 
- * */
+require_once 'assets/lib/connect.php';
 
 $index = 0;
 if (isset($_GET["pindex"])){
@@ -19,8 +14,10 @@ if (isset($_GET["search"])) {
 		$user_type = $_SESSION["user_type"];
 		if ($user_type == "user"){
 			$result = search($search_input, "user", $index);
+			print_table($result, "user");
 		} else if ($user_type == "admin") {
 			$result = search($search_input, "user", $index);
+			print_table($result, "admin");
 		} else {
 			$result = search($search_input, "guest", $index);
 			print_table($result, "guest");
@@ -30,10 +27,14 @@ if (isset($_GET["search"])) {
 		print_table($result, "guest");
 	}
 } else {
+	if (isset($_SESSION["user_type"])) {
+		$result = search("", $_SESSION["user_type"], $index);
+		print_table($result, $_SESSION["user_type"]);
+	} else {
+		$result = search("", "guest", $index);
+		print_table($result, "guest");
+	}
 	
-	
-	$result = search("", "guest", $index);
-	print_table($result, "guest");
 }
 
 /*
@@ -53,12 +54,8 @@ Associated image filename3, Associated image filename4, Notes, Shipping Weight
  * */
 
 function search($keyword, $user_type, $index){
-	$host = 'localhost';
-    $db = 'test';
-    $usr = 'user';
-    $pw = '*utep2020!';
-    
-    $connection = new mysqli($host, $usr, $pw, $db);
+
+    $connection = get_connection();
     if ($connection->connect_error) die("Fatal Error");
        
 	$result = array();
@@ -80,12 +77,7 @@ function search($keyword, $user_type, $index){
 }
 
 function getSearchCount($keyword){
-	$host = 'localhost';
-    $db = 'test';
-    $usr = 'user';
-    $pw = '*utep2020!';
-    
-    $connection = new mysqli($host, $usr, $pw, $db);
+   $connection = get_connection();
     if ($connection->connect_error) die("Fatal Error");
     
     $count = 0;

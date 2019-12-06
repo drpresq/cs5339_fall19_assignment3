@@ -188,7 +188,8 @@ echo <<<_END
     <tr style="text-align:center;">
     <td width=10%>
 _END;
-    echo "<button onclick=\"location.href = 'http://".$_SERVER['HTTP_HOST']."/index.php'\" style=\"width:auto;\">Home</button>";
+    //echo "<button onclick=\"location.href = 'http://".$_SERVER['HTTP_HOST']."/index.php'\" style=\"width:auto;\">Home</button>";
+    echo "<button onclick=\"location.href = 'index.php'\" style=\"width:auto;\">Home</button>";
 echo <<<_END
     </td>
     <td width=80%>
@@ -231,7 +232,7 @@ echo <<< _END
             <input type="checkbox" checked="checked" name="remember"> Remember me
           </label>
 _END;
-        echo '<input type="hidden" name="csrf_token" value="'.$_COOKIE['PHPSESSID'].'">';
+        echo '<input type="hidden" name="csrf_token" value="'.session_id().'">';
 echo <<<_END
         </div>
     
