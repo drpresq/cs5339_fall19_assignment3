@@ -164,9 +164,21 @@ span.reg {
 }
 
 .table-filter .artist {
-        color:gray;
+    color:gray;
 	font-size: 13px;
 }
+
+.page_navigator {
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 5px;
+}
+
 </style>
 _END;
 
