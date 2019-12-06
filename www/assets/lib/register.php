@@ -15,7 +15,6 @@ utype varchar(10) not null,
 function register_new_user($username, $password, $email){
 	$connection = get_connection();
     if ($connection->connect_error) die("Fatal Error");
-	$result = "";
 	try {
 		$stmt = $connection->prepare("insert into tusers (Username, UPassword, EmailAddress, utype) "
 							. "values ( ? , ? , ? , ? ) ");
@@ -26,7 +25,6 @@ function register_new_user($username, $password, $email){
 		$ut = "user";
 		$stmt->execute();
         @mysqli_close($connection);
-        return $result;
 	} catch (\mysqli_sql_exception $ex) {
 		throw $ex;
 	} catch (Exception $e) {
