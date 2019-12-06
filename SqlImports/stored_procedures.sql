@@ -50,9 +50,9 @@ begin
 end
 //
 
-create procedure sp_get_part(in partid int)
+create procedure sp_get_part(in part_id int)
 begin
-	select * from carparts where PartID = partid;
+	select * from carparts where PartID = part_id;
 end
 //
 

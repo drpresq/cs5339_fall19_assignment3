@@ -126,7 +126,7 @@ function print_table ($query_result, $user_type) {
 			."<th>Estimated Shipping Cost</th><th>Associated image filename1</th><th>Associated image filename2</th>" 
 			."<th>Associated image filename3</th><th>Associated image filename4</th><th>Notes</th>"
 			."<th>Shipping Weight</th><th>Edit</th></tr>";
-		echo "<form method='post' action='#'>";
+		echo "<form method='post' action='assets/lib/update_part.php'>";
 		foreach ($query_result as $row) {
 			$i = 0;
 			$id = -1;
@@ -137,7 +137,7 @@ function print_table ($query_result, $user_type) {
 				echo "<td>".htmlspecialchars($column_data)."</td>";
 				++$i;
 			} 
-			echo "<td><input name='$id' type='submit' value='Edit'></td>";
+			echo "<td><button name='partid' value='$id' type='submit'>Edit</button></td>";
 			echo "</tr>";
 		}
 		echo "</form>";
